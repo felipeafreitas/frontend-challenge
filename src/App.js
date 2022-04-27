@@ -11,7 +11,9 @@ function App() {
   const [tabsData, setTabsData] = useState({});
   const [pluginsEnabled, setPluginsEnabled] = useState(undefined);
   const [plugins, setPlugins] = useState([]);
-  const [currentTabPluginsFormatted, setCurrentTabPluginsFormatted] = useState([]);
+  const [currentTabPluginsFormatted, setCurrentTabPluginsFormatted] = useState(
+    []
+  );
 
   useEffect(() => {
     axios
@@ -29,6 +31,8 @@ function App() {
       .then(({ data }) => setPlugins(data))
       .catch((err) => console.log(err));
   }, []);
+
+  const currentTab = window.location.pathname.replace('/', '') || tabs[0];
 
   useEffect(() => {
     if (!!Object.keys(tabsData).length) {
@@ -61,9 +65,7 @@ function App() {
 
       setCurrentTabPluginsFormatted(newState);
     }
-  }, [tabsData]);
-
-  const currentTab = window.location.pathname.replace('/', '') || tabs[0];
+  }, [tabsData, currentTab]);
 
   const togglePlugin = (event) => {
     const pluginChecked = event.target.checked;
