@@ -5,8 +5,10 @@ import TabLink from './components/TabLink';
 import Card from './components/Card';
 import Sidebar from './components/Sidebar';
 import Panel from './components/Panel';
+import { useLocation } from 'react-router-dom';
 
 function App() {
+  const { pathname } = useLocation();
   const [tabs, setTabs] = useState([]);
   const [tabsData, setTabsData] = useState({});
   const [pluginsEnabled, setPluginsEnabled] = useState(undefined);
@@ -14,6 +16,7 @@ function App() {
   const [currentTabPluginsFormatted, setCurrentTabPluginsFormatted] = useState(
     []
   );
+
 
   useEffect(() => {
     axios
@@ -32,7 +35,7 @@ function App() {
       .catch((err) => console.log(err));
   }, []);
 
-  const currentTab = window.location.pathname.replace('/', '') || tabs[0];
+  const currentTab = pathname.replace('/', '') || tabs[0];
 
   useEffect(() => {
     if (!!Object.keys(tabsData).length) {
