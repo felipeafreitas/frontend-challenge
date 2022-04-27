@@ -11,12 +11,12 @@ function App() {
   const { pathname } = useLocation();
   const [tabs, setTabs] = useState([]);
   const [tabsData, setTabsData] = useState({});
-  const [pluginsEnabled, setPluginsEnabled] = useState(undefined);
-  const [plugins, setPlugins] = useState([]);
+  const [plugins, setPlugins] = useState({});
+  const [pluginsEnabled, setPluginsEnabled] = useState();
+  const [currentTab, setCurrentTab] = useState();
   const [currentTabPluginsFormatted, setCurrentTabPluginsFormatted] = useState(
     []
   );
-
 
   useEffect(() => {
     axios
@@ -26,19 +26,20 @@ function App() {
 
     axios
       .get('https://dataguard-db.herokuapp.com/tabdata')
-      .then(({ data }) => setTabsData(data))
+      .then(({ data }) => {
+        setCurrentTab(pathname?.replace('/', '') || data[0]);
+        setTabsData(data);
+      })
       .catch((err) => console.log(err));
 
     axios
       .get('https://dataguard-db.herokuapp.com/plugins')
       .then(({ data }) => setPlugins(data))
       .catch((err) => console.log(err));
-  }, []);
-
-  const currentTab = pathname.replace('/', '') || tabs[0];
+  }, [pathname]);
 
   useEffect(() => {
-    if (!!Object.keys(tabsData).length) {
+    if (!!Object.keys(tabsData).length && currentTab) {
       const currentPluginsActivesFormatted = tabsData?.[
         currentTab
       ]?.active?.map((plugin) => ({
@@ -190,7 +191,7 @@ function App() {
         handleEnablingPlugins={handleEnablingPlugins}
         pluginsEnabled={pluginsEnabled}
       >
-        {tabs.map((tab) => (
+        {tabs?.map((tab) => (
           <TabLink
             selected={currentTab === tab}
             icon={tabsData[tab]?.icon}

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const Button = styled.a`
+export const Button = styled.div`
   display: flex;
   flex-direction: row;
   gap: 20px;
