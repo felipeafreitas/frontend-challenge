@@ -202,7 +202,7 @@ function App() {
           </TabLink>
         ))}
       </Sidebar>
-      <Panel>
+      <Panel title={tabsData[currentTab].title}>
         {currentTabPluginsFormatted?.map((plugin) => (
           <Card key={plugin.id} disabled={plugin.status === 'inactive'}>
             <Flex justifyContent='space-between'>
