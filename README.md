@@ -1,3 +1,3 @@
-# DataGuard Challenge - Frontend Engineer
+# DataGuard Challenge
 
-This project was develop as part of the application to Dataguard position as Frontend Engineer
+Live Version: https://dataguard-challenge-felipe.netlify.app/
